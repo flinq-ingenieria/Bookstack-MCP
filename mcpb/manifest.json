@@ -1,0 +1,79 @@
+{
+  "$schema": "https://raw.githubusercontent.com/anthropics/mcpb/main/schemas/mcpb-manifest-v0.4.schema.json",
+  "manifest_version": "0.4",
+  "name": "bookstack-mcp",
+  "display_name": "BookStack MCP",
+  "version": "1.0.0",
+  "description": "FastMCP server for managing BookStack instances",
+  "long_description": "Expose consolidated BookStack tools over MCP for content CRUD, search, image gallery workflows, semantic search, batch operations, health checks, and runtime dashboards.",
+  "author": {
+    "name": "Flinq Ingenieria"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/flinq-ingenieria/Bookstack-MCP.git"
+  },
+  "homepage": "https://github.com/flinq-ingenieria/Bookstack-MCP",
+  "documentation": "https://github.com/flinq-ingenieria/Bookstack-MCP#readme",
+  "support": "https://github.com/flinq-ingenieria/Bookstack-MCP/issues",
+  "keywords": ["bookstack", "mcp", "fastmcp", "wiki", "knowledge-base", "search"],
+  "server": {
+    "type": "uv",
+    "entry_point": "fastmcp_server/run_stdio.py",
+    "mcp_config": {
+      "command": "uv",
+      "args": ["run", "--directory", "${__dirname}", "python", "fastmcp_server/run_stdio.py"],
+      "env": {
+        "BS_URL": "${user_config.bookstackUrl}",
+        "BS_TOKEN_ID": "${user_config.bookstackTokenId}",
+        "BS_TOKEN_SECRET": "${user_config.bookstackTokenSecret}",
+        "HAYHOOKS_SEARCH_URL": "${user_config.hayhooksSearchUrl}"
+      }
+    }
+  },
+  "user_config": {
+    "bookstackUrl": {
+      "type": "string",
+      "title": "BookStack URL",
+      "description": "Base URL of the BookStack instance, for example https://wiki.example.com.",
+      "required": true
+    },
+    "bookstackTokenId": {
+      "type": "string",
+      "title": "Token ID",
+      "description": "BookStack API token ID.",
+      "required": true,
+      "sensitive": true
+    },
+    "bookstackTokenSecret": {
+      "type": "string",
+      "title": "Token secret",
+      "description": "BookStack API token secret.",
+      "required": true,
+      "sensitive": true
+    },
+    "hayhooksSearchUrl": {
+      "type": "string",
+      "title": "Hayhooks search URL",
+      "description": "Optional endpoint for semantic search. Leave empty if you do not use bookstack_semantic_search."
+    }
+  },
+  "tools": [
+    {"name": "bookstack_manage_content", "description": "Unified CRUD operations for books, bookshelves, chapters, and pages."},
+    {"name": "bookstack_list_content", "description": "List and filter BookStack entities with pagination."},
+    {"name": "bookstack_search", "description": "Full-text search across BookStack content."},
+    {"name": "bookstack_semantic_search", "description": "Semantic or hybrid search across BookStack documents."},
+    {"name": "bookstack_manage_images", "description": "Unified create, read, update, delete, and list operations for gallery images."},
+    {"name": "bookstack_search_images", "description": "Advanced image discovery with extension, date, size, and usage filters."},
+    {"name": "bookstack_batch_operations", "description": "Bulk create, update, and delete operations for content entities."},
+    {"name": "bookstack_get_metrics", "description": "Expose runtime metrics for the BookStack MCP server."},
+    {"name": "bookstack_health_check", "description": "Return health information for the server and BookStack API."},
+    {"name": "bookstack_dashboard", "description": "Produce a human-friendly dashboard summarizing server status."}
+  ],
+  "compatibility": {
+    "platforms": ["darwin", "linux", "win32"],
+    "runtimes": {
+      "python": ">=3.8"
+    }
+  }
+}
