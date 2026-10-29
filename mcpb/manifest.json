@@ -22,7 +22,7 @@
     "entry_point": "fastmcp_server/run_stdio.py",
     "mcp_config": {
       "command": "uv",
-      "args": ["run", "--directory", "${__dirname}", "python", "fastmcp_server/run_stdio.py"],
+      "args": ["run", "--directory", "${__dirname}", "--no-dev", "python", "fastmcp_server/run_stdio.py"],
       "env": {
         "BS_URL": "${user_config.bookstackUrl}",
         "BS_TOKEN_ID": "${user_config.bookstackTokenId}",
@@ -55,7 +55,8 @@
     "hayhooksSearchUrl": {
       "type": "string",
       "title": "Hayhooks search URL",
-      "description": "Optional endpoint for semantic search. Leave empty if you do not use bookstack_semantic_search."
+      "description": "Optional endpoint for semantic search. Leave empty if you do not use bookstack_semantic_search.",
+      "default": ""
     }
   },
   "tools": [
@@ -73,7 +74,7 @@
   "compatibility": {
     "platforms": ["darwin", "linux", "win32"],
     "runtimes": {
-      "python": ">=3.8"
+      "python": ">=3.10"
     }
   }
 }
